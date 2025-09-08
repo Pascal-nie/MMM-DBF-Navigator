@@ -1,0 +1,14 @@
+.MMM-DBF-Navigator div {}
+
+.mmm-db-cancelled {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.dbf-navigator-delay {
+  color: red;
+}
+
+.dbf-navigator-ontime {
+  color: green;
+}
