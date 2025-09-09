@@ -82,7 +82,7 @@ Add the module to your `config.js` in the MagicMirror `modules` array:
   module: "MMM-DBF-Navigator",
   position: "top_left",
   config: {
-    from: "Frankfurt Hbf",
+    from: "Frankfurt Hbf (tief)",
     maxSize: 10,
     via: "Wiesbaden"
   }
