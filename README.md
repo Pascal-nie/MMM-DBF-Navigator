@@ -23,11 +23,8 @@ A MagicMirror² module to display live train departures from Deutsche Bahn at yo
 
 2. **Clone this repository:**
    ```sh
-   git clone https://github.com/YOUR_GITHUB/MMM-DBF-Navigator.git
+   git clone https://github.com/Pascal-nie/MMM-DBF-Navigator.git
    ```
-
-3. **Install dependencies (if any):**
-   This module does not require additional dependencies by default.
 
 ---
 
