@@ -1,6 +1,4 @@
-.MMM-DBF-Navigator div {}
-
-.mmm-db-cancelled {
+.dbf-navigator-cancelled {
   text-decoration: line-through;
   color: gray;
 }
@@ -15,4 +13,9 @@
 
 .dbf-navigator-container {
   text-align: left;
+}
+
+.dbf-navigator-container table td,
+.dbf-navigator-container table th {
+  vertical-align: top;
 }

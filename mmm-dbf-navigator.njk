@@ -1,5 +1,5 @@
 <div class="dbf-navigator-container">
-  <h2 class="MMM-DBF-Navigator">{{from}}</h1>
+  <h2>{{from}}</h1>
   <table class="dbf-navigator-table">
     <thead>
       <tr>
@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       {% for train in trains %}
-        <tr class="{{ "mmm-dbf-cancelled" if train.cancelled else "" }}">
+        <tr class="{{ "dbf-navigator-cancelled" if train.cancelled else "" }}">
           <td>{{ train.name }}</td>
           <td>{{ train.destination }}</td>
           <td>

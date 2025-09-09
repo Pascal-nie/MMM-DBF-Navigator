@@ -11,7 +11,7 @@ Module.register("MMM-DBF-Navigator", {
   },
 
   getStyles() {
-    return ["template.css"]
+    return ["dbf-navigator.css"]
   },
 
   getTranslations() {
@@ -79,7 +79,7 @@ Module.register("MMM-DBF-Navigator", {
         destination: item.destination,
         scheduledDeparture: item.scheduledDeparture,
         realDeparture,
-        showRealDeparture: this.isDuringNextHour(item.scheduledDeparture),
+        showRealDeparture: this.isDuringNextHour(realDeparture),
         relativeTime: this.calculateRelativeTime(realDeparture).formatted,
         delay: item.delayDeparture,
         cancelled: item.isCancelled != 0,
