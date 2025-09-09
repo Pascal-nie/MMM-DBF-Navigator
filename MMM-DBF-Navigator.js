@@ -44,6 +44,7 @@ Module.register("MMM-DBF-Navigator", {
         destination: this.translate("destination"),
         departure: this.translate("departure"),
         delay: this.translate("delay"),
+        in: this.translate("in"),
       },
       trains: this.trainData
     };
@@ -71,15 +72,19 @@ Module.register("MMM-DBF-Navigator", {
   },
 
   mapResponse(response) {
-    return response.departures.map(item => ({
-      name: item.train,
-      destination: item.destination,
-      scheduledDeparture: item.scheduledDeparture,
-      realDeparture: this.calculateRealDeparture(item.scheduledDeparture, item.delayDeparture),
-      relativeTime: this.calculateRelativeTime(this.calculateRealDeparture(item.scheduledDeparture, item.delayDeparture)),
-      delay: item.delayDeparture,
-      cancelled: item.isCancelled != 0
-    })).slice(0, Math.min(this.config.maxSize, response.departures.length))
+    return response.departures.map(item => {
+      const realDeparture = this.calculateRealDeparture(item.scheduledDeparture, item.delayDeparture)
+      return {
+        name: item.train,
+        destination: item.destination,
+        scheduledDeparture: item.scheduledDeparture,
+        realDeparture,
+        showRealDeparture: this.isDuringNextHour(item.scheduledDeparture),
+        relativeTime: this.calculateRelativeTime(realDeparture).formatted,
+        delay: item.delayDeparture,
+        cancelled: item.isCancelled != 0,
+      }
+    }).slice(0, Math.min(this.config.maxSize, response.departures.length))
   },
 
   calculateRealDeparture(timeString, delayMinutes) {
@@ -98,9 +103,16 @@ Module.register("MMM-DBF-Navigator", {
       time.add(1, 'day')
       diffMinutes = time.diff(now, 'minutes')
     }
+    let formatted = "";
     if (diffMinutes >= 60) {
-      return Math.abs(time.diff(now, 'hours')) + " h"
+      formatted = Math.abs(time.diff(now, 'hours')) + " h"
+    } else {
+      formatted = diffMinutes + " min"
     }
-    return diffMinutes + " min";
+    return { diffMinutes, formatted };
+  },
+
+  isDuringNextHour(scheduledDeparture) {
+    return this.calculateRelativeTime(scheduledDeparture).diffMinutes <= 60
   }
 })

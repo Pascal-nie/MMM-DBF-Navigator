@@ -2,5 +2,6 @@
   "train": "Train",
   "destination": "Destination",
   "departure": "Departure",
-  "delay": "Delay"
+  "delay": "Delay",
+  "in": "in"
 }

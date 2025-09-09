@@ -9,6 +9,10 @@
   color: red;
 }
 
-.dbf-navigator-ontime {
+.dbf-navigator-realdeparture {
   color: green;
+}
+
+.dbf-navigator-container {
+  text-align: left;
 }

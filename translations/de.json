@@ -2,5 +2,6 @@
   "train": "Zug",
   "destination": "Ziel",
   "departure": "Abfahrt",
-  "delay": "Verspätung"
+  "delay": "Verspätung",
+  "in": "in"
 }

@@ -1,33 +1,33 @@
-<h2 class="MMM-DBF-Navigator">{{from}}</h1>
 <div class="dbf-navigator-container">
+  <h2 class="MMM-DBF-Navigator">{{from}}</h1>
   <table class="dbf-navigator-table">
     <thead>
       <tr>
         <th>{{header.train}}</th>
         <th>{{header.destination}}</th>
         <th>{{header.departure}}</th>
+        <th>{{header.in}}</th>
       </tr>
     </thead>
     <tbody>
       {% for train in trains %}
-      <tr class="{{ "mmm-dbf-cancelled" if train.cancelled else "" }}">
-        <td>{{ train.name }}</td>
-        <td>{{ train.destination }}</td>
-        {% if train.delay > 0 %}
+        <tr class="{{ "mmm-dbf-cancelled" if train.cancelled else "" }}">
+          <td>{{ train.name }}</td>
+          <td>{{ train.destination }}</td>
           <td>
-            {{ train.scheduledDeparture }} – {{ train.realDeparture }} 
-            <span class="dbf-navigator-delay">
-              +{{train.delay}}
-            </span> ({{ train.relativeTime }})
+            {{ train.scheduledDeparture }}
+            {% if train.delay > 0 %}
+              <span class="dbf-navigator-delay">+{{train.delay}}</span>
+            {% endif %}
+            {% if train.showRealDeparture %}
+              <br/>
+              <span class="{{ "dbf-navigator-delay" if train.delay > 8 else "dbf-navigator-realdeparture" }}">
+                {{ train.realDeparture }}
+              </span>
+            {% endif %}
           </td>
-        {% else %}
-          <td>
-            <span class="dbf-navigator-ontime">
-          {{ train.scheduledDeparture }} 
-          </span>
-          ({{ train.relativeTime }})</td>
-        {% endif %}
-      </tr>
+          <td>({{ train.relativeTime }})</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>
