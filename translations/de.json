@@ -3,5 +3,6 @@
   "destination": "Ziel",
   "departure": "Abfahrt",
   "delay": "Verspätung",
-  "in": "in"
+  "in": "in",
+  "from": "von"
 }

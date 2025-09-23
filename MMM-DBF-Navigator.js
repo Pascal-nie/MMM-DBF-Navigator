@@ -2,8 +2,10 @@ Module.register("MMM-DBF-Navigator", {
 
   defaults: {
     from: "Berlin Hbf",
+    via: '',
     maxSize: 8,
-    via: ''
+    updateInterval: 10 * 1000, // 10 seconds
+    stations: [] // Example: [{ from: "Berlin Hbf", via: "Leipzig Hbf" }, { from: "Munich Hbf", via: "Nuremberg Hbf" }] 
   },
 
   getScripts() {
@@ -21,14 +23,10 @@ Module.register("MMM-DBF-Navigator", {
     }
   },
 
-  /**
-   * Pseudo-constructor for our module. Initialize stuff here.
-   */
   start() {
     this.trainData = []
     this.fetchTrainData();
-    // set timeout for next random text
-    setInterval(() => this.fetchTrainData(), 10000)
+    setInterval(() => this.fetchTrainData(), this.config.updateInterval);
   },
 
 
@@ -38,22 +36,34 @@ Module.register("MMM-DBF-Navigator", {
 
   getTemplateData: function () {
     return {
-      from: this.config.from,
+      from: this.mapFromToDisplayName(this.config),
       header: {
         train: this.translate("train"),
         destination: this.translate("destination"),
         departure: this.translate("departure"),
         delay: this.translate("delay"),
         in: this.translate("in"),
+        from: this.translate("from")
       },
+      displayFromColumn: this.isMultiStationConfig(),
       trains: this.trainData
     };
   },
 
+  isMultiStationConfig() {
+    return this.config.stations && this.config.stations.length > 0;
+  },
+
+  mapFromToDisplayName(config) {
+    if (this.isMultiStationConfig()) {
+      return config.stations.map(station => station.from).join(" / ");
+    }
+    return config.from;
+  },
+
   fetchTrainData() {
     this.sendSocketNotification("FETCH_TRAIN_DATA", {
-      from: this.config.from,
-      via: this.config.via
+      stations: this.isMultiStationConfig() ? this.config.stations : [{ from: this.config.from, via: this.config.via }]
     })
   },
 
@@ -75,6 +85,7 @@ Module.register("MMM-DBF-Navigator", {
     return response.departures.map(item => {
       const realDeparture = this.calculateRealDeparture(item.scheduledDeparture, item.delayDeparture)
       return {
+        from: item.from,
         name: item.train,
         destination: item.destination,
         scheduledDeparture: item.scheduledDeparture,

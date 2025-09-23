@@ -3,6 +3,9 @@
   <table class="dbf-navigator-table">
     <thead>
       <tr>
+        {% if displayFromColumn %}
+          <th>{{header.from}}</th>
+        {% endif %}
         <th>{{header.train}}</th>
         <th>{{header.destination}}</th>
         <th>{{header.departure}}</th>
@@ -12,6 +15,9 @@
     <tbody>
       {% for train in trains %}
         <tr class="{{ "dbf-navigator-cancelled" if train.cancelled else "" }}">
+          {% if displayFromColumn %}
+            <td>{{ train.from }}</td>
+          {% endif %}
           <td>{{ train.name }}</td>
           <td>{{ train.destination }}</td>
           <td>
