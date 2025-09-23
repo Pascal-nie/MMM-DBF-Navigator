@@ -76,22 +76,31 @@ let config = {
 
 ## Example Configuration
 
+### Single Station
+
 ```javascript
 {
   module: "MMM-DBF-Navigator",
   position: "top_left",
   config: {
-    // Single station example
     from: "Frankfurt Hbf",
     via: "Wiesbaden",
-    maxSize: 10,
-    updateInterval: 30000 // updates every 30 seconds
+    maxSize: 10
+  }
+}
+```
 
-    // OR for multiple stations:
-    // stations: [
-    //   { from: "Berlin Hbf", via: "Leipzig Hbf" },
-    //   { from: "München Hbf", via: "Nürnberg Hbf" }
-    // ]
+### Multi Stations
+
+```javascript
+{
+  module: "MMM-DBF-Navigator",
+  position: "top_left",
+  config: {
+    stations: [
+       { from: "Berlin Hbf", via: "Leipzig Hbf" },
+       { from: "München Hbf", via: "Nürnberg Hbf" }
+   ]
   }
 }
 ```
