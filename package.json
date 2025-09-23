@@ -9,7 +9,13 @@
     "url": "git+[GitHub url].git"
   },
   "keywords": [
-    "template"
+    "MagicMirror",
+    "module",
+    "public transport",
+    "Deutsche Bahn",
+    "DB Navigator",
+    "train",
+    "DBF"
   ],
   "author": "Pascal Nießner",
   "license": "MIT",

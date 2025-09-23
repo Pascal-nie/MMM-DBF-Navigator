@@ -2,6 +2,8 @@
 
 A MagicMirror² module to display live train departures from Deutsche Bahn at your chosen station(s).
 
+Uses unoficial Deutsche Bahn API from DBF (see: [dbf.finalrewind.org](https://dbf.finalrewind.org/))
+
 ---
 
 ### Features
@@ -10,6 +12,7 @@ A MagicMirror² module to display live train departures from Deutsche Bahn at yo
 - Displays train name, destination, scheduled and real departure time, delay, and time remaining
 - Highlights cancelled trains
 - Supports filtering via a specific station
+- Multistation Support: Select 2 or more stations to display information in one table
 - Multilingual support (English, German)
 - Configurable update interval
 
@@ -24,17 +27,24 @@ A MagicMirror² module to display live train departures from Deutsche Bahn at yo
 
 2. **Clone this repository:**
    ```sh
-   git clone https://github.com/YOUR_GITHUB/MMM-DBF-Navigator.git
+   git clone https://github.com/Pascal-nie/MMM-DBF-Navigator.git
    ```
-
-3. **Install dependencies (if any):**
-   This module does not require additional dependencies by default.
 
 ---
 
 ## Configuration
 
 Add the module to your `config.js` in the MagicMirror `modules` array:
+
+```javascript
+let config = {  
+  // ...
+  modules: [
+    //...
+    // add here
+  ]
+}
+```
 
 ```javascript
 {
@@ -52,53 +62,15 @@ Add the module to your `config.js` in the MagicMirror `modules` array:
 
 ### Config Options
 
-- **from**  
-  _Type:_ `string`  
-  _Description:_ The departure station name.  
-  _Default:_ `"Berlin Hbf"`  
-  _Example:_  
-  ```javascript
-  from: "München Hbf"
-  ```
+| Option          | Type     | Mandatory | Default         | Example                                                                 | Description                                                                                  |
+|-----------------|----------|-----------|-----------------|-------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| `from`          | string   | Yes*      | `"Berlin Hbf"`  | `from: "München Hbf"`                                                   | The departure station name. The name can be found by searching for your station on the [DBF Frontend](https://dbf.finalrewind.org/). Required unless using `stations` array.                          |
+| `via`           | string   | No        | `""`            | `via: "Leipzig"`                                                        | (Optional) Filter departures via a specific station. Leave empty for all.                    |
+| `stations`      | array    | No        | `[]`            | `stations: [{ from: "Berlin Hbf", via: "Leipzig Hbf" }, { from: "München Hbf", via: "Nürnberg Hbf" }]` | (Optional) List of station objects for displaying departures from multiple stations. Each object should have at least a `from` property, and optionally a `via` property. If `stations` is used, `from` and `via` are ignored. |
+| `maxSize`       | number   | No        | `8`             | `maxSize: 5`                                                            | (Optional) Maximum number of departures to display.                                          |
+| `updateInterval`| number   | No        | `10000`         | `updateInterval: 30000`                                                 | (Optional) How often to update the departures, in milliseconds.                              |
 
-- **via**  
-  _Type:_ `string`  
-  _Description:_ (Optional) Filter departures via a specific station. Leave empty for all.  
-  _Default:_ `''`  
-  _Example:_  
-  ```javascript
-  via: "Leipzig"
-  ```
-
-- **maxSize**  
-  _Type:_ `number`  
-  _Description:_ (Optional) Maximum number of departures to display.  
-  _Default:_ `8`  
-  _Example:_  
-  ```javascript
-  maxSize: 5
-  ```
-
-- **updateInterval**  
-  _Type:_ `number`  
-  _Description:_ (Optional) How often to update the departures, in milliseconds.  
-  _Default:_ `10000` (10 seconds)  
-  _Example:_  
-  ```javascript
-  updateInterval: 30000 // 30 seconds
-  ```
-
-- **stations**  
-  _Type:_ `array`  
-  _Description:_ (Optional) List of station objects for displaying departures from multiple stations. Each object should have at least a `from` property, and optionally a `via` property.  
-  _Default:_ `[]`  
-  _Example:_  
-  ```javascript
-  stations: [
-    { from: "Berlin Hbf", via: "Leipzig Hbf" },
-    { from: "München Hbf", via: "Nürnberg Hbf" }
-  ]
-  ```
+\* **Note:** Either `from` or `stations` must be provided.
 
 ---
 

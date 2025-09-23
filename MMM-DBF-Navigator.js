@@ -117,6 +117,8 @@ Module.register("MMM-DBF-Navigator", {
     let formatted = "";
     if (diffMinutes >= 60) {
       formatted = Math.abs(time.diff(now, 'hours')) + " h"
+    } else if (diffMinutes === 0) {
+      formatted = "< 1 min"
     } else {
       formatted = diffMinutes + " min"
     }
