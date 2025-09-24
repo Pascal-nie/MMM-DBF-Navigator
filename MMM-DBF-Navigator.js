@@ -5,7 +5,7 @@ Module.register("MMM-DBF-Navigator", {
     via: '',
     maxSize: 8,
     updateInterval: 10 * 1000, // 10 seconds
-    stations: [] // Example: [{ from: "Berlin Hbf", via: "Leipzig Hbf" }, { from: "Munich Hbf", via: "Nuremberg Hbf" }] 
+    stations: [] // Example: [{ from: "Berlin Hbf", via: "Leipzig Hbf" }, { from: "München Hbf", via: "Nürnberg Hbf" }] 
   },
 
   getScripts() {
@@ -67,12 +67,6 @@ Module.register("MMM-DBF-Navigator", {
     })
   },
 
-  /**
-   * This is the place to receive notifications from other modules or the system.
-   *
-   * @param {string} notification The notification ID, it is preferred that it prefixes your module name
-   * @param {number} payload the payload type.
-   */
   socketNotificationReceived(notification, payload) {
     console.log(`Received socket notification: ${notification}`)
     if (notification === "DB_NAVIGATOR_TRAIN_DATA") {

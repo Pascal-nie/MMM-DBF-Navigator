@@ -5,17 +5,15 @@ const moment = require("moment");
 module.exports = NodeHelper.create({
 
   async socketNotificationReceived(notification, payload) {
-    Log.info(`Received socket notification: ${notification} with payload: ${JSON.stringify(payload)}`)
     if (notification === "FETCH_TRAIN_DATA") {
       const { stations } = payload;
       Promise.all(stations.map(station => fetchTrainData(station.from, station.via)))
         .then(results => {
           const combinedResults = results.flat().sort(sort);
-          Log.info(`Fetched successfully multi train data with ${combinedResults.length} entries`)
           this.sendSocketNotification("DB_NAVIGATOR_TRAIN_DATA", { departures: combinedResults })
         })
         .catch(error => {
-          Log.error(`Error fetching multi train data: ${error}`)
+          Log.error(`Error fetching train data: ${error}`)
         })
     }
   }

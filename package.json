@@ -6,7 +6,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+[GitHub url].git"
+    "url": "git+https://github.com/Pascal-nie/MMM-DBF-Navigator.git.git"
   },
   "keywords": [
     "MagicMirror",
@@ -20,8 +20,7 @@
   "author": "Pascal Nießner",
   "license": "MIT",
   "bugs": {
-    "url": "[GitHub url]/issues"
+    "url": "https://github.com/Pascal-nie/MMM-DBF-Navigator/issues"
   },
-  "homepage": "[GitHub url]#readme",
   "devDependencies": {}
 }
