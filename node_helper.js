@@ -29,6 +29,34 @@ function fetchTrainData(from, via) {
     .then(data => data.departures || [])
     .then(data => data.map(item => ({
       ...item,
-      from: from
+      from: from,
+      infoMessages: extractMessages(item.messages)
     })));
 }
+
+// Collects delay reasons (e.g. "Reparatur an einem Signal") and quality of service
+// notes (e.g. "Wagen fehlen") independent of the current delay, newest first, without duplicates.
+function extractMessages(messages) {
+  if (!messages) return [];
+  const entries = Array.isArray(messages)
+    ? messages
+    : [...(messages.delay || []), ...(messages.qos || [])];
+  const seen = new Set();
+  return entries
+    .map(entry => typeof entry === "string"
+      ? { text: entry, timestamp: 0 }
+      : { text: entry.text || entry.lead || entry.header || "", timestamp: toEpoch(entry.timestamp) })
+    .map(entry => ({ ...entry, text: entry.text.trim() }))
+    .filter(entry => entry.text)
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .filter(entry => !seen.has(entry.text) && seen.add(entry.text))
+    .map(entry => entry.text);
+}
+
+function toEpoch(timestamp) {
+  if (typeof timestamp === "number") return timestamp;
+  const parsed = Date.parse(timestamp);
+  return isNaN(parsed) ? 0 : parsed / 1000;
+}
+
+module.exports.extractMessages = extractMessages;

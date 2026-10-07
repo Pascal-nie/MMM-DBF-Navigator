@@ -34,6 +34,11 @@
           </td>
           <td>({{ train.relativeTime }})</td>
         </tr>
+        {% if train.messages.length > 0 %}
+          <tr class="dbf-navigator-messages">
+            <td colspan="{{ columnCount }}">{{ train.messages | join(" · ") }}</td>
+          </tr>
+        {% endif %}
       {% endfor %}
     </tbody>
   </table>

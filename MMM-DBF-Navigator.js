@@ -5,6 +5,8 @@ Module.register("MMM-DBF-Navigator", {
     via: '',
     maxSize: 8,
     updateInterval: 10 * 1000, // 10 seconds
+    showMessages: true,
+    maxMessages: 3,
     stations: [] // Example: [{ from: "Berlin Hbf", via: "Leipzig Hbf" }, { from: "München Hbf", via: "Nürnberg Hbf" }] 
   },
 
@@ -46,6 +48,7 @@ Module.register("MMM-DBF-Navigator", {
         from: this.translate("from")
       },
       displayFromColumn: this.isMultiStationConfig(),
+      columnCount: this.isMultiStationConfig() ? 5 : 4,
       trains: this.trainData
     };
   },
@@ -88,6 +91,7 @@ Module.register("MMM-DBF-Navigator", {
         relativeTime: this.calculateRelativeTime(realDeparture).formatted,
         delay: item.delayDeparture,
         cancelled: item.isCancelled != 0,
+        messages: this.config.showMessages ? (item.infoMessages || []).slice(0, this.config.maxMessages) : [],
       }
     }).slice(0, Math.min(this.config.maxSize, response.departures.length))
   },
