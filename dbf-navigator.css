@@ -19,3 +19,10 @@
 .dbf-navigator-container table th {
   vertical-align: top;
 }
+
+.dbf-navigator-messages td {
+  font-size: 0.7em;
+  line-height: 1.2em;
+  color: orange;
+  padding-top: 0;
+}

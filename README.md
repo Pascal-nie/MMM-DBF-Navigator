@@ -11,6 +11,7 @@ Uses unoficial Deutsche Bahn API from DBF (see: [dbf.finalrewind.org](https://db
 - Shows upcoming train departures from one or multiple configurable stations
 - Displays train name, destination, scheduled and real departure time, delay, and time remaining
 - Highlights cancelled trains
+- Shows additional train information (e.g. "Reparatur an einem Signal", "Wagen fehlen") below each train, even if it is on time
 - Supports filtering via a specific station
 - Multistation Support: Select 2 or more stations to display information in one table
 - Multilingual support (English, German)
@@ -69,6 +70,8 @@ let config = {
 | `stations`      | array    | No        | `[]`            | `stations: [{ from: "Berlin Hbf", via: "Leipzig Hbf" }, { from: "München Hbf", via: "Nürnberg Hbf" }]` | (Optional) List of station objects for displaying departures from multiple stations. Each object should have at least a `from` property, and optionally a `via` property. If `stations` is used, `from` and `via` are ignored. |
 | `maxSize`       | number   | No        | `8`             | `maxSize: 5`                                                            | (Optional) Maximum number of departures to display.                                          |
 | `updateInterval`| number   | No        | `10000`         | `updateInterval: 30000`                                                 | (Optional) How often to update the departures, in milliseconds.                              |
+| `showMessages`  | boolean  | No        | `true`          | `showMessages: false`                                                   | (Optional) Show additional information (delay reasons, missing cars, etc.) below each train, regardless of delay. |
+| `maxMessages`   | number   | No        | `3`             | `maxMessages: 1`                                                        | (Optional) Maximum number of messages shown per train (newest first).                        |
 
 \* **Note:** Either `from` or `stations` must be provided.
 
